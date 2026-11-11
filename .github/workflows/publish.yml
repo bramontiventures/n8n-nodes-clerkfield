@@ -94,8 +94,16 @@ jobs:
         #   npm uses the OIDC exchange instead.
         # Option B (token): set NPM_TOKEN in repo secrets — it is written to
         #   .npmrc here before publishing.
+        # On failure, npm's error lines are repeated as annotations so they show on the run's summary page.
+        shell: bash
         run: |
-          [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
-          npm run release
+          if [ -n "$NPM_TOKEN" ]; then npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"; echo "Using NPM_TOKEN"; else echo "NPM_TOKEN not set, using OIDC"; fi
+          set +e
+          npm run release 2>&1 | tee release.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            grep -E "npm (error|ERR!)|E40[0-9]|ENEEDAUTH|EOTP|provenance" release.log | tail -12 | while IFS= read -r line; do echo "::error::$line"; done
+          fi
+          exit "$status"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

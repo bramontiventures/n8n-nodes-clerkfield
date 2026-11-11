@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-clerkfield",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "n8n node for Clerkfield: verify U.S. businesses against official state registries and search UCC liens by business or lender.",
 	"license": "MIT",
 	"homepage": "https://clerkfield.com/docs",
@@ -19,7 +19,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/bramontiventures/n8n-nodes-clerkfield.git"
+		"url": "git+https://github.com/bramontiventures/n8n-nodes-clerkfield.git"
 	},
 	"scripts": {
 		"build": "n8n-node build",

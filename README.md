@@ -65,4 +65,5 @@ Built with the n8n node CLI and tested with n8n 1.x. The node has no runtime dep
 
 ## Version history
 
+- **0.1.1**: published from GitHub Actions with npm provenance; same functionality as 0.1.0.
 - **0.1.0**: first release with Business → Verify, UCC Lien → Search and Coverage → Get.
